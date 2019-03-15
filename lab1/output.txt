@@ -1,1 +1,11 @@
-hello friends!
+111                 : Aceita
+001                 : Aceita
+00101               : Rejeitada
+11                  : Rejeitada
+00                  : Rejeitada
+100100              : Rejeitada
+100100001           : Aceita
+1                   : Aceita
+000001              : Rejeitada
+00110001            : Rejeitada
+01110001100         : Rejeitada
