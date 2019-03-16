@@ -1,0 +1,15 @@
+0011                : Aceita
+00111               : Aceita
+00011               : Aceita
+000111              : Rejeitada
+111                 : Aceita
+001                 : Aceita
+00101               : Aceita
+11                  : Aceita
+00                  : Aceita
+100100              : Aceita
+100100001           : Aceita
+1                   : Aceita
+000001              : Rejeitada
+00110001            : Rejeitada
+01110001100         : Aceita

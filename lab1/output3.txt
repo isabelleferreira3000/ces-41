@@ -1,0 +1,10 @@
+2                   : Rejeitada
+22                  : Rejeitada
+222                 : Rejeitada
+2222                : Rejeitada
+22222               : Aceita
+012                 : Rejeitada
+0012201             : Rejeitada
+011122102           : Rejeitada
+100210222           : Rejeitada
+1010122222          : Aceita

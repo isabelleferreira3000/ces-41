@@ -42,12 +42,11 @@ int verificaRegra (char entrada){
 					countOnes++;
 			}
 
-			if(maxWord >= 5) {
+			if(maxWord >= 4) {
 				if(countOnes < 3) {
 					failed = 1;
 				}
 				
-				// if(word[maxWord-4] == '1'){
 				if(yylval.aux[maxWord-4] == '1'){
 					countOnes--;
 				}
