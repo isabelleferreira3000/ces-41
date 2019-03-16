@@ -15,77 +15,81 @@
 #define ATRIB	14 // sinal de atribuição
 #define VIRG	15 // vírgula
 #define PVIRG	16 // ponto-e-vírgula
-
+#define PONTO	17
+#define MAIS	1
+#define MENOS	2
+#define VEZES	3
+#define DIV		4
+union {
+	char string[50];
+	int atr, valor;
+	float valreal;
+	char carac;
+} yylval;
 %}
 delim	[ \t\n\r]
-ws	{delim}+
+ws		{delim}+
+digito	[0-9]
+letra	[A-Za-z]
+id		{letra}({letra}|{digito})*
+ctint	{digito}+
+ctreal	{digito}+.{digito}*
+
 %%
-program	{return PROGRAM};
-var		{return VAR};
-int		{return INT};
-real	{return REAL};
-{ws}		{ ;}
-"0"		{return verificaRegra('0');}
-"1"		{return verificaRegra('1');}
+program	 {return PROGRAM;}
+var		 {return VAR;}
+int		 {return INT;}
+real	 {return REAL;}
+{ws}	 { ;}
+"("		 {return ABPAR;}
+")"		 {return FPAR;}
+"{"		 {return ABCHAV;}
+"}"		 {return FCHAV;}
+"="		 {return ATRIB;}
+","		 {return VIRG;}
+";"		 {return PVIRG;}
+{id}	 {strcpy (yylval.string, yytext); return ID;}
+{ctint}	 {yylval.valor = atoi(yytext); return CTINT;}
+{ctreal} {yylval.valreal = atof(yytext); return CTREAL;}
+"+"		 {yylval.atr = MAIS; return OPAD;}
+"-"		 {yylval.atr = MENOS; return OPAD;}
+"*"		 {yylval.atr = VEZES; return OPMULT;}
+"/"		 {yylval.atr = DIV; return OPMULT;}
 %%
-int verificaRegra (char entrada){
-	int maxWord = 0; // maximo indice preenchido no vetor
-	int countOnes; // minimo de 1s que tem em janelas de 5 digitos
-	char digito; // digito sendo lido
-	int failed = 0; // "bool" para dizer se falhou
-
-	yylval.aux[0] = entrada;
-	if(entrada == '1'){
-		countOnes = 1;
-	} else {
-		countOnes = 0;
-	}
-	
-	while(1){
-		digito = input();
-		
-		// ler palavra ate o espaco
-		if(digito == ' ' || digito == '\t' ||
-			digito == '\n' || digito == '\r'){
-			break;
-		}
-		maxWord++;
-		yylval.aux[maxWord] = digito;
-
-		if(!failed){
-			if(digito == '1'){
-					countOnes++;
-			}
-
-			if(maxWord >= 5) {
-				if(countOnes < 3) {
-					failed = 1;
-				}
-				
-				// if(word[maxWord-4] == '1'){
-				if(yylval.aux[maxWord-4] == '1'){
-					countOnes--;
-				}
-			}
-		}
-	}
-
-	yylval.aux[maxWord+1] = '\0';
-
-	if(!failed){
-		return ACEITA;
-	}
-	return OUTRA;
-}
 main () {
 	int i;
-	while (i = yylex ())
+	printf ("\n   texto  |   tipo   | atributo \n");
+	printf ("--------------------------------\n");
+	while (i = yylex ()) {
+		printf ("%10s|%10d|", yytext, i);
 		switch (i) {
-			case ACEITA:
-				printf ("%-20s: Aceita\n", yylval.aux); 
+			// case PROGRAM:
+			// case VAR:
+			// case INT:
+			// case ID:
+			case REAL:
+				printf ("%10s", yylval.string); 
 				break;
-			case OUTRA:
-				printf ("%-20s: Rejeitada\n", yylval.aux); 
+			case CTINT:
+				printf ("%10d", yylval.valor); 
+				break;
+			case CTREAL:
+				printf ("%10.2f", yylval.valreal); 
+				break;
+			// case ABPAR:
+			// case FPAR:
+			// case ABCHAV:
+			// case FCHAV:
+			// case ATRIB:
+			// case VIRG:
+			// case PVIRG:
+			case OPAD:
+			case OPMULT:
+				printf ("%10d", yylval.atr);
+				break;
+			default:
 				break;
 		}
+		printf ("\n");
+	}
 }
