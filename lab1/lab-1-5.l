@@ -1,14 +1,29 @@
 %{
-#define	ACEITA	1
-#define OUTRA 	2
-union {
-	char aux[50];
-} yylval;
-int verificaRegra (char entrada);
+#define PROGRAM 1 
+#define VAR		2
+#define	INT		3
+#define REAL	4
+#define	ID 		5  // identificadores
+#define	CTINT 	6  // constantes inteiras
+#define CTREAL	7  // constantes reais
+#define OPAD	8  // operadores aditivos
+#define OPMULT	9  // operadores multiplicativos
+#define ABPAR	10 // abre-parentesis
+#define FPAR	11 // fecha-parentesis
+#define ABCHAV	12 // abre-chaves
+#define FCHAV	13 // fecha-chaves
+#define ATRIB	14 // sinal de atribuição
+#define VIRG	15 // vírgula
+#define PVIRG	16 // ponto-e-vírgula
+
 %}
 delim	[ \t\n\r]
 ws	{delim}+
 %%
+program	{return PROGRAM};
+var		{return VAR};
+int		{return INT};
+real	{return REAL};
 {ws}		{ ;}
 "0"		{return verificaRegra('0');}
 "1"		{return verificaRegra('1');}
