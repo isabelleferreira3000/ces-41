@@ -1,0 +1,58 @@
+
+            texto            |   tipo   |           atributo          
+----------------------------------------------------------------------
+                      program|        15|
+                  PrintTestes|        23|                  PrintTestes
+                            {|        40|
+                    functions|         8|
+                            :|        44|
+                         main|        14|
+                            {|        40|
+                        local|        12|
+                            :|        44|
+                          int|        11|
+                            i|        23|                            i
+                            ,|        43|
+                          qnt|        23|                          qnt
+                            ;|        42|
+                   statements|        18|
+                            :|        44|
+                        write|        22|
+                            (|        36|
+           "Quantos prints: "|        27|           "Quantos prints: "
+                            )|        37|
+                            ;|        42|
+                         read|        16|
+                            (|        36|
+                          qnt|        23|                          qnt
+                            )|        37|
+                            ;|        42|
+                            i|        23|                            i
+                           <-|        35|
+                            0|        24|                            0
+                            ;|        42|
+                        while|        21|
+                            (|        36|
+                            i|        23|                            i
+                            <|        31|                            1
+                          qnt|        23|                          qnt
+                            )|        37|
+                            {|        40|
+                        write|        22|
+                            (|        36|
+                            i|        23|                            i
+                            )|        37|
+                            ;|        42|
+                        write|        22|
+                            (|        36|
+                         "\n"|        27|                         "\n"
+                            )|        37|
+                            ;|        42|
+                            }|        41|
+                        write|        22|
+                            (|        36|
+                "Hello World"|        27|                "Hello World"
+                            )|        37|
+                            ;|        42|
+                            }|        41|
+                            }|        41|

@@ -116,7 +116,7 @@ write		{return WRITE;}
 {id}		{strcpy(yylval.string, yytext); return ID;} // Sintaxes
 {intct}		{yylval.valor = atoi(yytext); return INTCT;}
 {floatct}	{yylval.valreal = atof(yytext); return FLOATCT;}
-{charct}	{yylval.carac = yytext[0]; return CHARCT;}
+{charct}	{yylval.carac = yytext[1]; return CHARCT;}
 {string}	{strcpy(yylval.string, yytext); return STRING;}
 
 "||"		{return OR;} // Operadores

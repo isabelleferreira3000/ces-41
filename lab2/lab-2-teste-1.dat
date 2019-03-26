@@ -1,0 +1,24 @@
+/*  Programa que printa de 1 a NUMERO e Hello World         */
+    
+program PrintTestes {
+
+functions:
+    /*  Modulo principal  */
+    main {
+
+    local:
+        int i, qnt;
+    
+    statements:
+        write ("Quantos prints: ");
+        read (qnt);
+        i <- 0;
+        while(i < qnt) {
+            write(i);
+            write("\n");
+        }
+        write("Hello World");
+
+    } /* Fim da funcao main */
+
+} /* Fim do programa AnaliseDeTexto */
