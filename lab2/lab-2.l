@@ -71,6 +71,8 @@ union {
 	char carac;
 } yylval;
 
+void comentario ();
+
 %}
 delim	[ \t\n\r]
 ws		{delim}+
@@ -81,9 +83,9 @@ caract2	\\.|[^\\\"]
 
 id		{letra}({letra}|{digito})*
 intct	{digito}+
-charct	'(\)?caract1'
+charct	'{caract1}'
 floatct	{digito}+.{digito}*([Ee][+-]?{digito}+)?
-string	"{{\}?caract2}*"
+string	\"{caract2}*\"
 
 %%
 {ws}	 	{ ;}
@@ -113,9 +115,9 @@ write		{return WRITE;}
 
 {id}		{strcpy(yylval.string, yytext); return ID;} // Sintaxes
 {intct}		{yylval.valor = atoi(yytext); return INTCT;}
-{charct}	{strcpy (yylval.string, yytext); return CTCHAR;; return CHARCT;}
 {floatct}	{yylval.valreal = atof(yytext); return FLOATCT;}
-{string}	{strcpy (yylval.string, yytext); return STRING;}
+{charct}	{yylval.carac = yytext[0]; return CHARCT;}
+{string}	{strcpy(yylval.string, yytext); return STRING;}
 
 "||"		{return OR;} // Operadores
 "&&" 		{return AND;}
@@ -144,33 +146,68 @@ write		{return WRITE;}
 ","			{return COMMA;}
 ":"			{return COLON;}
 
+"/*"		{comentario ();}
+
 %%
+
+void comentario () {
+	char c;
+	int estado;
+	
+	estado = 1;
+	while(estado != 3) {
+		switch(estado) {
+			case 1:
+				c = input();
+				if(c == EOF) {
+					estado = 3;
+				} else if(c == '*') {
+					estado = 2;
+				} else {
+					estado = 1;
+				}
+				break;
+
+			case 2:
+				c = input();
+				if(c == EOF || c == '/') {
+					estado = 3;
+				} else if(c == '*') {
+					estado = 2;
+				} else {
+					estado = 1;
+				}
+				break;
+		}
+	}
+}
+
 main () {
 	int i;
-	printf ("\n      texto      |   tipo   | atributo \n");
-	printf ("----------------------------------------------\n");
+	printf ("\n            texto            |   tipo   |           atributo          \n");
+	printf ("----------------------------------------------------------------------\n");
 	while (i = yylex ()) {
-		printf ("%17s|%10d|", yytext, i);
+		printf ("%29s|%10d|", yytext, i);
 		switch (i) {
 			case ID: case CHARCT: case STRING:
-				printf ("%17s", yylval.string); 
+				printf("%29s", yylval.string); 
 				break;
 
 			case INTCT:
-				printf ("%17d", yylval.valor); 
+				printf("%29d", yylval.valor); 
 				break;
 
 			case FLOATCT:
-				printf ("%17g", yylval.valreal); 
+				printf("%29g", yylval.valreal); 
 				break;
 
 			case RELOP: case ADOP: case MULTOP:
-				printf ("%17d", yylval.atr); 
+				printf("%29d", yylval.atr); 
 				break;
 
 			default:
 				break;
 		}
-		printf ("\n");
+		printf("\n");
 	}
 }
