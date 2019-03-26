@@ -1,17 +1,17 @@
 %{
 #include 	<string.h>
-#define 	ELSE 		1
-#define 	IF 		2
-#define	WHILE   	3
+#define ELSE 	1
+#define IF 		2
+#define	WHILE   3
 #define	ID		4
-#define	CTINT		5
-#define	OPREL		6
-#define INVAL 7
-#define CTREAL 8
-#define CTCHAR 9
-#define CADEIA 10
-#define 	LT 		1
-#define 	LE 		2
+#define	CTINT	5
+#define	OPREL	6
+#define INVAL 	7
+#define CTREAL 	8
+#define CTCHAR 	9
+#define CADEIA 	10
+#define LT 		1
+#define LE 		2
 #define	GT		3
 #define	GE		4
 #define	EQ		5
@@ -50,7 +50,7 @@ while		{return WHILE;}
 ">="		{yylval.atr = GE; return OPREL;}
 "=="		{yylval.atr = EQ; return OPREL;}
 "!="		{yylval.atr = NE; return OPREL;}
-.		{yylval.carac = yytext[0]; return INVAL;}
+.			{yylval.carac = yytext[0]; return INVAL;}
 %%
 main () {
 	int i;
