@@ -147,35 +147,27 @@ write		{return WRITE;}
 %%
 main () {
 	int i;
-	printf ("\n   texto  |   tipo   | atributo \n");
-	printf ("--------------------------------\n");
+	printf ("\n      texto      |   tipo   | atributo \n");
+	printf ("----------------------------------------------\n");
 	while (i = yylex ()) {
-		printf ("%10s|%10d|", yytext, i);
+		printf ("%17s|%10d|", yytext, i);
 		switch (i) {
-			// case PROGRAM:
-			// case VAR:
-			// case INT:
-			// case ID:
-			case REAL:
-				printf ("%10s", yylval.string); 
+			case ID: case CHARCT: case STRING:
+				printf ("%17s", yylval.string); 
 				break;
-			case CTINT:
-				printf ("%10d", yylval.valor); 
+
+			case INTCT:
+				printf ("%17d", yylval.valor); 
 				break;
-			case CTREAL:
-				printf ("%10.2f", yylval.valreal); 
+
+			case FLOATCT:
+				printf ("%17g", yylval.valreal); 
 				break;
-			// case ABPAR:
-			// case FPAR:
-			// case ABCHAV:
-			// case FCHAV:
-			// case ATRIB:
-			// case VIRG:
-			// case PVIRG:
-			case OPAD:
-			case OPMULT:
-				printf ("%10d", yylval.atr);
+
+			case RELOP: case ADOP: case MULTOP:
+				printf ("%17d", yylval.atr); 
 				break;
+
 			default:
 				break;
 		}
