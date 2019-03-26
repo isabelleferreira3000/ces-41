@@ -84,7 +84,7 @@ caract2	\\.|[^\\\"]
 id		{letra}({letra}|{digito})*
 intct	{digito}+
 charct	'{caract1}'
-floatct	{digito}+.{digito}*([Ee][+-]?{digito}+)?
+floatct	{digito}+\.{digito}*([Ee][+-]?{digito}+)?
 string	\"{caract2}*\"
 
 %%
