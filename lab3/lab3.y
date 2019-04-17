@@ -2,7 +2,6 @@
 #include	<stdio.h>
 #include	<stdlib.h>
 
-#define YYSTYPE float
 #define MENORQUE	1
 #define MENORIGUAL	2
 #define MAIORQUE	3
@@ -94,18 +93,18 @@ union {
 %token WHILE
 %token WRITE
 
-%token ID
-%token INTCT
-%token CHARCT
-%token FLOATCT
-%token STRING
+%token <string>     ID
+%token <valor>      INTCT
+%token <carac>      CHARCT
+%token <valreal>    FLOATCT
+%token <string>     STRING
 
 %token OR
 %token AND
 %token NOT
-%token RELOP
-%token ADOP
-%token MULTOP
+%token <atr>        RELOP
+%token <atr>        ADOP
+%token <atr>        MULTOP
 %token NEG
 
 %token ASSIGN
