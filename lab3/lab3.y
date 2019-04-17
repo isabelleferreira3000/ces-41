@@ -1,8 +1,27 @@
 %{
 #include	<stdio.h>
 #include	<stdlib.h>
-#define 	YYSTYPE float
+
+#define YYSTYPE float
+#define MENORQUE	1
+#define MENORIGUAL	2
+#define MAIORQUE	3
+#define MAIORIGUAL	4
+#define IGUAL		5
+#define DIFERENTE	6
+#define MAIS		7
+#define MENOS		8
+#define VEZES		9
+#define DIV			10
+#define PERCENT 	11
 %}
+
+union {
+	char string[50];
+	int atr, valor;
+	float valreal;
+	char carac;
+}
 
 %token CALL
 %token CHAR
