@@ -4,12 +4,53 @@
 #define 	YYSTYPE float
 %}
 
-%token	DOLAR
-%token	CTE
-%token	MAIS
-%token	VEZES
-%token	ABPAR
-%token	FPAR
+%token CALL
+%token CHAR
+%token DO
+%token ELSE
+%token FALSE
+%token FLOAT
+%token FOR
+%token FUNCTIONS
+%token GLOBAL
+%token IF
+%token INT
+%token LOCAL
+%token LOGIC
+%token MAIN
+%token PROGRAM
+%token READ
+%token RETURN
+%token STATEMENTS
+%token TRUE
+%token VOID
+%token WHILE
+%token WRITE
+
+%token ID
+%token INTCT
+%token CHARCT
+%token FLOATCT
+%token STRING
+
+%token OR
+%token AND
+%token NOT
+%token RELOP
+%token ADOP
+%token MULTOP
+%token NEG
+
+%token ASSIGN
+%token OPPAR
+%token CLPAR
+%token OPBRAK
+%token CLBRAK
+%token OPBRACE
+%token CLBRACE
+%token SCOLON
+%token COMMA
+%token COLON
 
 %%
 
@@ -203,8 +244,7 @@ Subscripts  :
 SubscrList	:   AuxExpr4
             |   SubscrList COMMA AuxExpr4
             ;
-            
+
 %%
 
 #include "lex.yy.c"
-
