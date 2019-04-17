@@ -15,60 +15,12 @@
 #define PERCENT 	11
 %}
 
-union {
+%union {
 	char string[50];
 	int atr, valor;
 	float valreal;
 	char carac;
 }
-
-%type Prog
-%type GlobDecls
-%type DeclList
-%type Declaration
-%type Type
-%type ElemList
-%type Elem
-%type Dims
-%type DimList
-%type Functions
-%type FuncList
-%type Function
-%type Header
-%type Params
-%type ParamList
-%type Parameter
-%type LocDecls
-%type Stats
-%type StatList
-%type Statement
-%type CompStat
-%type IfStat
-%type ElseStat
-%type WhileStat
-%type DoStat
-%type ForStat
-%type ReadStat
-%type ReadList
-%type WriteStat
-%type WriteList
-%type WriteElem
-%type CallStat
-%type FuncCall
-%type Arguments
-%type ReturnStat
-%type AssignStat
-%type ExprList
-%type Expression
-%type AuxExpr1
-%type AuxExpr2
-%type AuxExpr3
-%type AuxExpr4
-%type Term
-%type Factor
-%type Variable
-%type Subscripts
-%type SubscrList
 
 %token CALL
 %token CHAR
