@@ -13,6 +13,8 @@
 #define VEZES		9
 #define DIV			10
 #define PERCENT 	11
+
+int tab = 0;
 %}
 
 %union {
@@ -266,3 +268,9 @@ SubscrList	:   AuxExpr4
 %%
 
 #include "lex.yy.c"
+
+tabular () {
+	int i;
+	for (i = 1; i <= tab; i++)
+   	printf ("\t");
+}
