@@ -74,23 +74,23 @@ int tab = 0;
 
 %%
 
-Prog        :	PROGRAM     {printf("\nprogram ");}
-                ID          {/*printf ("%s ", $1);*/}
-                OPBRACE     {printf("\{");}
+Prog        :	PROGRAM     {printf("program ");}
+                ID          { /* printf ("%s ", $2); */ }
+                OPBRACE     {printf ("{"); tab++;}
                 GlobDecls
                 Functions
-                CLBRACE     {printf("\n}\n");}
+                CLBRACE     {tab--; printf ("}\n");}
             ;
 
 GlobDecls 	:
             |   GLOBAL      {printf("\nglobal");}
                 COLON       {printf(":");}
-                DeclList  
+                DeclList
             ;
 
 DeclList	:	Declaration {printf ("\n"); tabular ();}
             |   DeclList
-                Declaration
+                Declaration {printf ("\n"); tabular ();}
             ;
 
 Declaration :	Type
@@ -111,7 +111,8 @@ ElemList    :	Elem
                 Elem
             ;
 
-Elem        :	ID Dims
+Elem        :	ID          { /* printf ("%s", $1); */ }
+                Dims
             ;
 
 Dims		:	
@@ -120,32 +121,32 @@ Dims		:
                 CLBRAK      {printf("]");}
             ;
 
-DimList	    :   INTCT
+DimList	    :   INTCT       { /* printf ("%d", $1); */ }
             |   DimList
                 COMMA       {printf(", ");}
-                INTCT
+                INTCT       { /* printf ("%d", $1); */ }
             ;
 
 Functions	:   FUNCTIONS   {printf("\nfunctions");}
                 COLON       {printf(":");}
-                FuncList
+                FuncList    {printf("\n"); tabular();}
             ;
 
-FuncList	:   Function    {printf("\n");}
+FuncList	:   Function
             |   FuncList
-                Function    {printf("\n");}
+                Function
             ;
 
 Function	:	Header      {printf("\n");}
-                OPBRACE     {printf("\(");}
+                OPBRACE     {printf("{"); tab++;}
                 LocDecls
                 Stats 
-                CLBRACE     {printf("\) ");}
+                CLBRACE     {printf("} "); tab--;}
             ;
 
-Header		:   MAIN        {printf("\nmain");}
+Header		:   MAIN        {printf("main ");}
             |   Type 
-                ID
+                ID          { /* printf ("%s ", $2); */ }
                 OPPAR       {printf("\(");}
                 Params
                 CLPAR       {printf("\) ");}
@@ -162,12 +163,12 @@ ParamList   :   Parameter
             ;
 
 Parameter   :   Type
-                ID  
+                ID          { /* printf ("%s", $2); */ }
             ;
 
 LocDecls	:   
-            |   LOCAL       {printf("\nlocal");}
-                COLON       {printf(":");}
+            |   LOCAL       {printf("\n"); tabular(); printf("local");}
+                COLON       {printf(":"); tab++;}
                 DeclList
             ;
 
