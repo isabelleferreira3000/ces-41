@@ -198,7 +198,7 @@ CompStat	:   OPBRACE     {tabular (); printf ("\{\n"); tab++;}
                 CLBRACE     {tab--; tabular (); printf ("}\n");}
             ;
 
-IfStat		:   IF          {prinf("\nif");}
+IfStat		:   IF          {printf("\nif");}
                 OPPAR       {printf("\(");}
                 Expression
                 CLPAR       {printf("\) ";)}
@@ -263,56 +263,124 @@ WriteStat  	:	WRITE       {printf("\nwrite ");}
             ;
 
 WriteList	:	WriteElem
-            |   WriteList COMMA WriteElem
+            |   WriteList
+                COMMA       {printf(", ");}
+                WriteElem
             ;
 
 WriteElem	:  	STRING
             |   Expression  
             ;
 
-CallStat	:   CALL FuncCall SCOLON
+CallStat	:   CALL        {printf("\ncall ");}
+                FuncCall
+                SCOLON      {printf(";");}
             ;
 
-FuncCall	:   ID OPPAR Arguments CLPAR  
+FuncCall	:   ID
+                OPPAR       {printf("\(");}
+                Arguments
+                CLPAR       {printf("\)");}
             ;
             
 Arguments	:	
             |   ExprList
             ;
 
-ReturnStat  :	RETURN SCOLON
-            |   RETURN Expression SCOLON
+ReturnStat  :	RETURN      {printf("return ");}
+                SCOLON      {printf(";");}
+            |   RETURN      {printf("return ");}
+                Expression
+                SCOLON      {printf(";");}
             ;
 
-AssignStat  :   Variable ASSIGN Expression SCOLON
+AssignStat  :   Variable
+                ASSIGN
+                Expression
+                SCOLON      {printf(";");}
             ;
 
 ExprList	:  	Expression
-            |   ExprList COMMA Expression
+            |   ExprList
+                COMMA       {printf(", ");}
+                Expression
             ;
 
 Expression  :   AuxExpr1
-            |   Expression OR AuxExpr1
+            |   Expression
+                OR          {printf("|| ");}
+                AuxExpr1
             ;
 
 AuxExpr1    :   AuxExpr2
-            |   AuxExpr1 AND AuxExpr2
+            |   AuxExpr1
+                AND         {printf("&& ");}
+                AuxExpr2
             ;
 
 AuxExpr2    :   AuxExpr3
-            |   NOT AuxExpr3
+            |   NOT         {printf("!");}
+                AuxExpr3
             ;
 
 AuxExpr3    :   AuxExpr4
-            |   AuxExpr4 RELOP AuxExpr4
+            |   AuxExpr4
+                RELOP       {
+                    switch ($2) {
+                        case MENORQUE:
+                            printf("< ");
+                            break;
+                        case MENORIGUAL:
+                            printf("<= ");
+                            break;
+                        case MAIORQUE:
+                            printf("> ");
+                            break;
+                        case MAIORIGUAL:
+                            printf(">= ");
+                            break;
+                        case IGUAL:
+                            printf("= ");
+                            break;
+                        case DIFERENTE:
+                            printf("!= ");
+                            break; 
+                    }
+                            }
+                AuxExpr4
             ;
 
 AuxExpr4    :	Term
-            |   AuxExpr4 ADOP Term
+            |   AuxExpr4
+                ADOP        {
+                    switch ($2) {
+                        case MAIS:
+                            printf("+ ");
+                            break;
+                        case MENOS:
+                            printf("- ");
+                            break;
+                    }
+                            }
+                Term
             ;
 
 Term  	    :   Factor
-            |   Term MULTOP Factor
+            |   Term
+                MULTOP      {
+                    switch ($2){
+                        case VEZES:
+                            printf("+ ");
+                            break;
+                        case DIV:
+                            printf("- ");
+                            break;
+                        case PERCENT:
+                            printf("\% ");
+                            break;
+                    }
+                            }
+                Factor
             ;
 
 Factor		:   Variable
@@ -321,20 +389,28 @@ Factor		:   Variable
             |   CHARCT  
             |   TRUE
             |   FALSE
-            |   NEG Factor
-            |   OPPAR Expression CLPAR
+            |   NEG         {printf("~ ");}
+                Factor
+            |   OPPAR       {printf("\(");}
+                Expression
+                CLPAR       {printf("\)");}
             |   FuncCall
             ;
 
-Variable	:   ID Subscripts
+Variable	:   ID
+                Subscripts
             ;
 
 Subscripts  :	
-            |   OPBRAK SubscrList CLBRAK  
+            |   OPBRAK      {printf("[");}
+                SubscrList
+                CLBRAK      {printf("]");}
             ;
 
 SubscrList	:   AuxExpr4
-            |   SubscrList COMMA AuxExpr4
+            |   SubscrList
+                COMMA       {printf(", ");}
+                AuxExpr4
             ;
 
 %%
